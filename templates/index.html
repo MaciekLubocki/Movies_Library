@@ -7,13 +7,15 @@
    <div class="col-lg-12 text-center a13">
        <h1 class="mt-5">Welcome at my library</h1>
        <p class="lead">You may find here best movies!</p>
-   </div>
+        
+    </div>
    {% for movie in movies %}
-       <div class="card row">
-   <div class="my-auto text-center">
-           <img class="card-img-top" src="http://placehold.it/300x500" alt="">
+      <div class="col-lg-3 col-md-6 mb-4">
+       <div class="card h-100 text-center">
+           
+           <img class="card-img-top" img src="{{ tmdb_image_url(movie.poster_path, "w342") }}">
            <div class="card-body">
-               <h4 class="card-title">Movie title</h4>
+               <h4 class="card-title">{{movie.title}}</h4>
            </div>
            <div class="card-footer text-center">
                <a href="#" class="btn btn-primary">Show more</a>
