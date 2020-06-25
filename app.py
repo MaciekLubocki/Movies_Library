@@ -1,16 +1,14 @@
-from flask import Flask, render_template
-from flask import Flask, request, render_template, redirect, url_for
-from flask import jsonify, abort, make_response
-from flask import request
+from flask import Flask, request, render_template
 import tmdb_client
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def homepage():
     selected_list = request.args.get('list_type', "upcoming")
     movies = tmdb_client.get_movies(how_many=8, list_type=selected_list)
-    lists=['popular','top_rated', 'upcoming','now_playing']
+    lists = ['popular', 'top_rated', 'upcoming', 'now_playing']
     return render_template("index.html", movies=movies, current_list=selected_list, lists=lists)
 
 
@@ -34,9 +32,6 @@ def movie_details(movie_id):
     cast = tmdb_client.get_single_movie_cast(movie_id)
     return render_template("movie_details.html", movie=details, cast=cast)
 
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-

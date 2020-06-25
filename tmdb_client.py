@@ -3,11 +3,16 @@ import requests
 API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMWYwMDliNmE5OTYxYTRhMmY0MDQ2YmE3OTU4NjdhNSIsInN1YiI6IjVlZTg4ZmVhNjhiNzY2MDAyM2JhNmRjZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Gasjj-1s35UiWCzTFzH7x0ybmYBDi77vtuHzXsY9kvk"
 
 
+def head():
+    header = {"Authorization": f"Bearer {API_TOKEN}"}
+    return header
+
+
 def get_movies_list(list_type):
+    headers = head()
     endpoint = f"https://api.themoviedb.org/3/movie/{list_type}"
-    headers = {"Authorization": f"Bearer {API_TOKEN}"}
     response = requests.get(endpoint, headers=headers)
-    if response.status_code is not True:
+    if response.status_code == 404:
         endpoint = f"https://api.themoviedb.org/3/movie/popular"
         response = requests.get(endpoint, headers=headers)
     response.raise_for_status()
@@ -15,10 +20,8 @@ def get_movies_list(list_type):
 
 
 def get_single_movie(movie_id):
+    headers = head()
     endpoint = f"https://api.themoviedb.org/3/movie/{movie_id}"
-    headers = {
-        "Authorization": f"Bearer {API_TOKEN}"
-    }
     response = requests.get(endpoint, headers=headers)
     return response.json()
 
@@ -29,10 +32,8 @@ def get_movies(how_many, list_type):
 
 
 def get_popular_movies():
+    headers = head()
     endpoint = "https://api.themoviedb.org/3/movie/popular"
-    headers = {
-        "Authorization": f"Bearer {API_TOKEN}"
-    }
     response = requests.get(endpoint, headers=headers)
     return response.json()
 
@@ -48,9 +49,7 @@ def get_pic_url(backdrop_path, size="w342"):
 
 
 def get_single_movie_cast(movie_id):
+    headers = head()
     endpoint = f"https://api.themoviedb.org/3/movie/{movie_id}/credits"
-    headers = {
-        "Authorization": f"Bearer {API_TOKEN}"
-    }
     response = requests.get(endpoint, headers=headers)
     return response.json()["cast"]
